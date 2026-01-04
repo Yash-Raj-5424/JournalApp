@@ -1,0 +1,10 @@
+package com.company.journalApp.repository;
+import com.company.journalApp.entities.JournalEntry;
+import com.company.journalApp.entities.User;
+import org.bson.types.ObjectId;
+import org.springframework.data.mongodb.repository.MongoRepository;
+
+public interface UserRepository extends MongoRepository<User, ObjectId> {
+
+     User findByUserName(String username);
+}
