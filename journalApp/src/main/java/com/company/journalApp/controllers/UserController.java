@@ -2,6 +2,7 @@ package com.company.journalApp.controllers;
 
 import com.company.journalApp.entities.JournalEntry;
 import com.company.journalApp.entities.User;
+import com.company.journalApp.repository.UserRepository;
 import com.company.journalApp.services.JournalEntryService;
 import com.company.journalApp.services.UserService;
 import org.bson.types.ObjectId;
@@ -21,8 +22,10 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private UserRepository userRepository;
 
-    @PutMapping()
+    @PutMapping
     public ResponseEntity<User> updateUser(@RequestBody User user){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String userName = authentication.getName();
@@ -36,5 +39,10 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-
+    @DeleteMapping
+    public ResponseEntity<?> deleteByUserId(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        userRepository.deleteByUserName(authentication.getName());
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 }
