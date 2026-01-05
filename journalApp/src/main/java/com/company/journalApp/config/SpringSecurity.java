@@ -42,6 +42,17 @@ public class SpringSecurity {
     }
 
 
+//    @Autowired
+//    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+//        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+//    }
+
+
+    // protected void configure(AuthenticationManagerBuilder auth) throws Exception{
+    //     auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+    // }
+
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
