@@ -16,6 +16,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
+
 @Component
 @Slf4j
 public class UserService {
@@ -30,10 +31,16 @@ public class UserService {
 
     }
 
-    public void saveNewUser(User user){
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setRoles(List.of("ROLE_USER"));
-        userRepository.save(user);
+    public boolean saveNewUser(User user){
+        try {
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+            user.setRoles(List.of("ROLE_USER"));
+            userRepository.save(user);
+            return true;
+        }catch (Exception e){
+            log.error("Error occurred for {} ", user.getUserName(), e);
+            return false;
+        }
     }
 
     public void saveAdmin(User user) {

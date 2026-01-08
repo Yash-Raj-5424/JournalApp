@@ -23,6 +23,7 @@ public class JournalEntryService {
     @Autowired
     private UserService userService;
 
+
     @Transactional
     public void saveEntry(JournalEntry journalEntry, String userName){
             try {
@@ -33,8 +34,7 @@ public class JournalEntryService {
                 userService.saveEntry(user);
             }
             catch (Exception e){
-                System.out.println(e);
-                throw new RuntimeException("Some error occured while saving the entry: ", e);
+                log.error("Error occurred: ", e);
             }
     }
 
