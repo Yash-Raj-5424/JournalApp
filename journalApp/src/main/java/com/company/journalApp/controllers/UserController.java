@@ -1,8 +1,10 @@
 package com.company.journalApp.controllers;
 
+import com.company.journalApp.api.dummy.DemoAPI;
 import com.company.journalApp.entities.JournalEntry;
 import com.company.journalApp.entities.User;
 import com.company.journalApp.repository.UserRepository;
+import com.company.journalApp.services.ExternalApiService;
 import com.company.journalApp.services.JournalEntryService;
 import com.company.journalApp.services.UserService;
 import org.bson.types.ObjectId;
@@ -44,5 +46,21 @@ public class UserController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         userRepository.deleteByUserName(authentication.getName());
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    // just a dummy code for learning how to consume a response from an external API
+    // doesn't give any actual response -> just returns "Hi <username> "
+
+    @Autowired
+    ExternalApiService externalApiService;
+
+    @GetMapping
+    public ResponseEntity<?> greet(){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        DemoAPI demoResponse = externalApiService.getAPIresponse();
+        // now you can use and play with this response for any purpose you want
+        return new ResponseEntity<>("Hi " + auth.getName(), HttpStatus.OK);
+
+
     }
 }
